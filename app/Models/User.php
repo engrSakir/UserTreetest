@@ -41,4 +41,14 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    public function leftChild()
+    {
+        return $this->belongsTo(User::class, 'left_user', 'id');
+    }
+
+    public function rightChild()
+    {
+        return $this->belongsTo(User::class, 'right_user', 'id');
+    }
 }

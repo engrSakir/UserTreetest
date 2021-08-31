@@ -17,9 +17,9 @@ if (!function_exists('random_code')) {
 
     function parent($user_id){
         if(User::where('left_user', $user_id)->first()){
-            return User::where('left_user', $user_id)->first();
+            return User::where('left_user', $user_id)->first()->name;
         }else if(User::where('right_user', $user_id)->first()){
-            return User::where('right_user', $user_id)->first();
+            return User::where('right_user', $user_id)->first()->name;
         }else{
             return 'No Parent';
         }
@@ -45,32 +45,39 @@ if (!function_exists('random_code')) {
             ],
         ];
 
-        foreach (App\Models\User::where('id', '>=', $root_user_id)->get()->take(7) as $key => $user){
+            // Level one
+            $data["l1"]["l1_u1"] = User::find($root_user_id);
 
-            if ($key +1 == 1) {
-                $data["l1"]["l1_u1"] = $user;
+            // Level two
+            if($data["l1"]["l1_u1"]){
+                $data["l2"]["l2_u1"] = $data["l1"]["l1_u1"]->leftChild;
+                $data["l2"]["l2_u2"] = $data["l1"]["l1_u1"]->rightChild;
             }
-            if ($key +1 == 2) {
-                $data["l2"]["l2_u1"] = $user;
+
+            //Level three left group
+            if($data["l2"]["l2_u1"]){
+                $data["l3"]["l3_u1"] = $data["l2"]["l2_u1"]->leftChild;
+                $data["l3"]["l3_u2"] = $data["l2"]["l2_u1"]->rightChild;
             }
-            if ($key +1 == 3) {
-                $data["l2"]["l2_u2"] = $user;
+
+            // Level three right group
+            if($data["l2"]["l2_u2"]){
+                $data["l3"]["l3_u3"] = $data["l2"]["l2_u2"]->leftChild;
+                $data["l3"]["l3_u4"] = $data["l2"]["l2_u2"]->rightChild;
             }
-            if ($key +1 == 4) {
-                $data["l3"]["l3_u1"] = $user;
-            }
-            if ($key +1 == 5) {
-                $data["l3"]["l3_u2"] = $user;
-            }
-            if ($key +1 == 6) {
-                $data["l3"]["l3_u3"] = $user;
-            }
-            if ($key +1 == 7) {
-                $data["l3"]["l3_u4"] = $user;
-            }
-        }
 
         return $data;
     }
 
+    function carry_increment($child_id = 1, $carry = 0){
+        $user = App\Models\User::where('left_user', $child_id)->orWhere('right_user', $child_id)->first();
+
+        while($user != null) {
+            $user->carry += $carry;
+            $user->save();
+            //echo "<h1></h1>Parent : ". $user->name."</h1> <br>";
+
+            $user = App\Models\User::where('left_user', $user->id)->orWhere('right_user', $user->id)->first();
+        }
+    }
 }

@@ -23,6 +23,7 @@ class CreateUsersTable extends Migration
             $table->string('using_ref')->nullable();
             $table->foreignId('left_user')->nullable();
             $table->foreignId('right_user')->nullable();
+            $table->integer('carry')->default(0);
             $table->rememberToken();
             $table->timestamps();
         });

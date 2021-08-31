@@ -38,7 +38,8 @@
                         <div class="card" style="width: 18rem;">
 
                             <div class="card-body">
-                                <p>{{ position($data["l1"]["l1_u1"]->id) }}</p>
+                                <p>Ref: {{ $data["l1"]["l1_u1"]->own_ref }}</p>
+                                <p>Car: {{ $data["l1"]["l1_u1"]->carry }}</p>
                                 <h5 class="card-title">{{ $data["l1"]["l1_u1"]->name }}</h5>
                                 <a href="{{ route('selsctUser', $data["l1"]["l1_u1"]->id) }}" class="btn btn-primary">Click Me</a>
                             </div>
@@ -46,7 +47,7 @@
                         @else
                         <div class="card" style="width: 18rem;">
                             <div class="card-body">
-                                <h5 class="card-title">{{ 'No Name' }}</h5>
+                                <h5 class="card-title">{{ 'Empty' }}</h5>
                             </div>
                         </div>
                         @endif
@@ -56,6 +57,8 @@
                         <div class="card" style="width: 18rem;">
 
                             <div class="card-body">
+                                <p>Ref: {{ $data["l2"]["l2_u1"]->own_ref }}</p>
+                                <p>Car: {{ $data["l2"]["l2_u1"]->carry }}</p>
                                 <h5 class="card-title">{{ $data["l2"]["l2_u1"]->name }}</h5>
                                 <a href="{{ route('selsctUser', $data["l2"]["l2_u1"]->id) }}" class="btn btn-primary">Click Me</a>
                             </div>
@@ -63,7 +66,7 @@
                         @else
                         <div class="card" style="width: 18rem;">
                             <div class="card-body">
-                                <h5 class="card-title">{{ 'No Name' }}</h5>
+                                <h5 class="card-title">{{ 'Empty' }}</h5>
                             </div>
                         </div>
                         @endif
@@ -73,6 +76,8 @@
                         <div class="card" style="width: 18rem;">
 
                             <div class="card-body">
+                                <p>Ref: {{ $data["l2"]["l2_u2"]->own_ref }}</p>
+                                <p>Car: {{ $data["l2"]["l2_u2"]->carry }}</p>
                                 <h5 class="card-title">{{ $data["l2"]["l2_u2"]->name }}</h5>
                                 <a href="{{ route('selsctUser', $data["l2"]["l2_u2"]->id) }}" class="btn btn-primary">Click Me</a>
                             </div>
@@ -80,7 +85,7 @@
                         @else
                         <div class="card" style="width: 18rem;">
                             <div class="card-body">
-                                <h5 class="card-title">{{ 'No Name' }}</h5>
+                                <h5 class="card-title">{{ 'Empty' }}</h5>
                             </div>
                         </div>
                         @endif
@@ -91,6 +96,8 @@
                         <div class="card col" style="width: 18rem;">
 
                             <div class="card-body">
+                                <p>Ref: {{ $data["l3"]["l3_u1"]->own_ref }}</p>
+                                <p>Car: {{ $data["l3"]["l3_u1"]->carry }}</p>
                                 <h5 class="card-title">{{ $data["l3"]["l3_u1"]->name }}</h5>
                                 <a href="{{ route('selsctUser', $data["l3"]["l3_u1"]->id) }}" class="btn btn-primary">Click Me</a>
                             </div>
@@ -98,7 +105,7 @@
                         @else
                         <div class="card col" style="width: 18rem;">
                             <div class="card-body">
-                                <h5 class="card-title">{{ 'No Name' }}</h5>
+                                <h5 class="card-title">{{ 'Empty' }}</h5>
                             </div>
                         </div>
                         @endif
@@ -108,6 +115,8 @@
                         <div class="card col" style="width: 18rem;">
 
                             <div class="card-body">
+                                <p>Ref: {{ $data["l3"]["l3_u2"]->own_ref }}</p>
+                                <p>Car: {{ $data["l3"]["l3_u2"]->carry }}</p>
                                 <h5 class="card-title">{{ $data["l3"]["l3_u2"]->name }}</h5>
                                 <a href="{{ route('selsctUser', $data["l3"]["l3_u2"]->id) }}" class="btn btn-primary">Click Me</a>
                             </div>
@@ -115,7 +124,7 @@
                         @else
                         <div class="card col" style="width: 18rem;">
                             <div class="card-body">
-                                <h5 class="card-title">{{ 'No Name' }}</h5>
+                                <h5 class="card-title">{{ 'Empty' }}</h5>
                             </div>
                         </div>
                         @endif
@@ -124,6 +133,8 @@
                         @if ($data["l3"]["l3_u3"])
                         <div class="card col" style="width: 18rem;">
                             <div class="card-body">
+                                <p>Ref: {{ $data["l3"]["l3_u3"]->own_ref }}</p>
+                                <p>Car: {{ $data["l3"]["l3_u3"]->carry }}</p>
                                 <h5 class="card-title">{{ $data["l3"]["l3_u3"]->name }}</h5>
                                 <a href="{{ route('selsctUser', $data["l3"]["l3_u3"]->id) }}" class="btn btn-primary">Click Me</a>
                             </div>
@@ -131,7 +142,7 @@
                         @else
                         <div class="card col" style="width: 18rem;">
                             <div class="card-body">
-                                <h5 class="card-title">{{ 'No Name' }}</h5>
+                                <h5 class="card-title">{{ 'Empty' }}</h5>
                             </div>
                         </div>
                         @endif
@@ -140,6 +151,8 @@
                         <div class="card col" style="width: 18rem;">
 
                             <div class="card-body">
+                                <p>Ref: {{ $data["l3"]["l3_u4"]->own_ref }}</p>
+                                <p>Car: {{ $data["l3"]["l3_u4"]->carry }}</p>
                                 <h5 class="card-title">{{ $data["l3"]["l3_u4"]->name }}</h5>
                                 <a href="{{ route('selsctUser', $data["l3"]["l3_u4"]->id) }}" class="btn btn-primary">Click Me</a>
                             </div>
@@ -147,7 +160,7 @@
                         @else
                         <div class="card col" style="width: 18rem;">
                             <div class="card-body">
-                                <h5 class="card-title">{{ 'No Name' }}</h5>
+                                <h5 class="card-title">{{ 'Empty' }}</h5>
                             </div>
                         </div>
                         @endif

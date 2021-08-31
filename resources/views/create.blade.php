@@ -69,9 +69,10 @@
                                     <th scope="col">Email</th>
                                     <th scope="col">Own Ref</th>
                                     <th scope="col">Using Ref</th>
-                                    <th scope="col">Parent</th>
                                     <th scope="col">Left</th>
                                     <th scope="col">Right</th>
+                                    <th scope="col">Carry</th>
+                                    <th scope="col">Carry Up</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -82,9 +83,18 @@
                                         <td>{{ $user->email }}</td>
                                         <td>{{ $user->own_ref }}</td>
                                         <td>{{ $user->using_ref }}</td>
-                                        <td>{{ $user->parent_user }}</td>
                                         <td>{{ $user->left_user }}</td>
                                         <td>{{ $user->right_user }}</td>
+                                        <td>{{ $user->carry }}</td>
+                                        <td>
+                                            <form action="{{ route("updateCarry") }}" method="post">
+                                                @csrf
+                                                <input type="hidden" name="user" value="{{ $user->id}}"/>
+                                            <input type="text" placeholder="Purchase QTY" name="carry_{{ $user->id}}" value="{{ old("carry_".$user->id) }}"/>
+                                            <input type="submit" class="btn btn-primary">
+                                            </form>
+
+                                        </td>
                                     </tr>
                                 @endforeach
                             </tbody>
