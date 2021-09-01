@@ -44,8 +44,6 @@ Route::post('/create', function (Request $request) {
 
     $parent = User::where('own_ref', $request->reference)->first();
 
-
-
     if($parent->left_user == null){
         $parent = $parent;
         $position = 'left';
@@ -54,7 +52,14 @@ Route::post('/create', function (Request $request) {
         $position = 'right';
     }else{
 
-        $parent = User::where('using_ref', $request->reference)->where('left_user', null)->first() ?? User::where('using_ref', $request->reference)->where('right_user', null)->first();
+        $parent_left = User::where('using_ref', $request->reference)->where('left_user', null)->first();
+        $parent_right = User::where('using_ref', $request->reference)->where('right_user', null)->first();
+
+        if($parent_left->id <= $parent_right->id){
+            $parent = $parent_left;
+        }else{
+            $parent = $parent_right;
+        }
 
         //dd($parent);
 
