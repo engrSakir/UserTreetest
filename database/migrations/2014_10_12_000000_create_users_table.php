@@ -19,10 +19,17 @@ class CreateUsersTable extends Migration
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
+
             $table->string('own_ref')->nullable();
             $table->string('using_ref')->nullable();
+
             $table->foreignId('left_user')->nullable();
             $table->foreignId('right_user')->nullable();
+
+
+            $table->foreignId('parent_user')->nullable();
+            // $table->foreignId('child_user')->nullable();
+
             $table->integer('carry')->default(0);
             $table->rememberToken();
             $table->timestamps();

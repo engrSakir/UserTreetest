@@ -41,24 +41,52 @@ Route::post('/create', function (Request $request) {
         'reference' => 'required|string|exists:users,own_ref',
     ]);
 
+
+    $parent = User::where('own_ref', $request->reference)->first();
+
+
+
+    if($parent->left_user == null){
+        $parent = $parent;
+        $position = 'left';
+    }else if($parent->right_user == null){
+        $parent = $parent;
+        $position = 'right';
+    }else{
+
+        $parent = User::where('using_ref', $request->reference)->where('left_user', null)->first() ?? User::where('using_ref', $request->reference)->where('right_user', null)->first();
+
+        //dd($parent);
+
+        if($parent->left_user == null){
+            $parent = $parent;
+            $position = 'left';
+
+        }else if($parent->right_user == null){
+            $parent = $parent;
+            $position = 'right';
+        }else{
+            //All of child's leg are full by child's referral code. So that new member (Try to cheare use admin's referral). Place not defined.
+            dd("This one is unknown login.");
+        }
+    }
+
     $user = new User();
     $user->name = $request->name;
     $user->email = $request->email;
     $user->password = bcrypt('password');
     $user->own_ref = Str::random(4);
     $user->using_ref = $request->reference;
+    $user->parent_user = $parent->id;
     $user->save();
 
-    $l_parent = User::where('left_user', null)->first();
-    $r_parent = User::where('right_user', null)->first();
-
-    if($l_parent->id <= $r_parent->id){
-        $l_parent->left_user = $user->id;
-        $l_parent->save();
+    //Parent update using new child record
+    if($position == 'left'){
+        $parent->left_user = $user->id;
     }else{
-        $r_parent->right_user = $user->id;
-        $r_parent->save();
+        $parent->right_user = $user->id;
     }
+    $parent->save();
 
     return back();
 })->name('storeUser');
