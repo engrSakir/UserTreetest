@@ -51,4 +51,9 @@ class User extends Authenticatable
     {
         return $this->belongsTo(User::class, 'right_user', 'id');
     }
+
+    public function childs()
+    {
+        return $this->hasMany(User::class, 'parent_user', 'id');
+    }
 }
