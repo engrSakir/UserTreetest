@@ -63,25 +63,21 @@ Route::post('/create', function (Request $request) {
         $parent_left = $parent->childs()->where('left_user', null)->first();
         $parent_right = $parent->childs()->where('right_user', null)->first();
 
-        if($parent_left->id <= $parent_right->id){
+        if($parent_left != null && $parent_right == null){
             $parent = $parent_left;
-        }else{
+        }else if($parent_left == null && $parent_right != null){
             $parent = $parent_right;
-        }
-
-        //dd($parent);
-
-        if($parent->left_user == null){
-            $parent = $parent;
-            $position = 'left';
-
-        }else if($parent->right_user == null){
-            $parent = $parent;
-            $position = 'right';
+        }else if($parent_left != null && $parent_right != null){
+            if($parent_left->id <= $parent_right->id){
+                $parent = $parent_left;
+            }else{
+                $parent = $parent_right;
+            }
         }else{
-            //All of child's leg are full by child's referral code. So that new member (Try to cheare use admin's referral). Place not defined.
-            dd("This one is unknown login.");
+            //Parent not found who have left/right side empty.
+            dd("Parent not found");
         }
+        //dd($parent);
     }
 
     $user = new User();
@@ -94,7 +90,7 @@ Route::post('/create', function (Request $request) {
     $user->save();
 
     //Parent update using new child record
-    if($position == 'left'){
+    if($parent->left_user == null){
         $parent->left_user = $user->id;
     }else{
         $parent->right_user = $user->id;
