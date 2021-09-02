@@ -37,39 +37,42 @@ Route::get('/create', function () {
 Route::post('/create', function (Request $request) {
     $request->validate([
         'name' => 'required',
-        'email' => 'required|email|unique:users,email',
         'reference' => 'required|string|exists:users,own_ref',
     ]);
 
 
     $parent = User::where('own_ref', $request->reference)->first();
 
-    if($parent->left_user != null && $parent->right_user != null){
-        $parent_left = $parent->childs()->where('left_user', null)->first();
-        $parent_right = $parent->childs()->where('right_user', null)->first();
-        if($parent_left != null && $parent_right == null){
-            $parent = $parent_left;
-        }else if($parent_left == null && $parent_right != null){
-            $parent = $parent_right;
-        }else if($parent_left != null && $parent_right != null){
-            if($parent_left->id <= $parent_right->id){
-                $parent = $parent_left;
-            }else{
-                $parent = $parent_right;
-            }
-        }else{
-            //Parent not found who have left/right side empty.
-            //dd("Parent not found");
-            foreach($parent->childs as $ch){
-                // dd($ch);
-
-                if(tfunction($ch) != null){
-                    $parent = tfunction($ch);
-                    break;
-                }
-            }
-        }
+    if(tfunction($parent) != null){
+        $parent = tfunction($parent);
     }
+
+    // if($parent->left_user != null && $parent->right_user != null){
+    //     $parent_left = $parent->childs()->where('left_user', null)->first();
+    //     $parent_right = $parent->childs()->where('right_user', null)->first();
+    //     if($parent_left != null && $parent_right == null){
+    //         $parent = $parent_left;
+    //     }else if($parent_left == null && $parent_right != null){
+    //         $parent = $parent_right;
+    //     }else if($parent_left != null && $parent_right != null){
+    //         if($parent_left->id <= $parent_right->id){
+    //             $parent = $parent_left;
+    //         }else{
+    //             $parent = $parent_right;
+    //         }
+    //     }else{
+    //         //Parent not found who have left/right side empty.
+    //         //dd("Parent not found");
+    //         foreach($parent->childs as $ch){
+    //             // dd($ch);
+
+    //             if(tfunction($ch) != null){
+    //                 $parent = tfunction($ch);
+    //                 break;
+    //             }
+    //         }
+    //     }
+    // }
 
     // dd($parent);
 

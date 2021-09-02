@@ -48,9 +48,6 @@
                                     <input type="text" class="form-control" placeholder="Name" name="name" value="{{ old('name') }}">
                                 </div>
                                 <div class="col">
-                                    <input type="text" class="form-control" placeholder="Email" name="email" value="{{ old('email') }}">
-                                </div>
-                                <div class="col">
                                     <input type="text" class="form-control" placeholder="Reference" name="reference" value="{{ old('reference') }}">
                                 </div>
                             </div>
@@ -66,7 +63,7 @@
                                 <tr>
                                     <th scope="col">#</th>
                                     <th scope="col">Name</th>
-                                    <th scope="col">Email</th>
+                                    <th scope="col">Parent ID</th>
                                     <th scope="col">Own Ref</th>
                                     <th scope="col">Using Ref</th>
                                     <th scope="col">Left</th>
@@ -80,7 +77,7 @@
                                     <tr>
                                         <th scope="row">{{ $loop->iteration }}</th>
                                         <td>{{ $user->name }}</td>
-                                        <td>{{ $user->email }}</td>
+                                        <td>{{ $user->parent_user }}</td>
                                         <td>{{ $user->own_ref }}</td>
                                         <td>{{ $user->using_ref }}</td>
                                         <td>{{ $user->left_user }}</td>
