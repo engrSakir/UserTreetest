@@ -17,7 +17,8 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    $data = user_tree(1);
+    $admin_user = 1;
+    $data = user_tree($admin_user);
     return view('welcome', compact('data'));
 });
 
@@ -34,13 +35,20 @@ Route::get('/create', function () {
 Route::post('/create', function (Request $request) {
     $request->validate([
         'name' => 'required',
-        'reference' => 'required|string|exists:users,own_ref',
+        'reference' => 'nullable|string|exists:users,own_ref',
     ]);
 
-    $parent = parent_finder(User::where('own_ref', $request->reference)->first());
-
-    if($parent == null){
-        $parent = most_left_and_bottom(User::where('own_ref', $request->reference)->first());
+    if($request->reference == null){
+        $admin_user = 1;
+        $parent = parent_finder(User::find($admin_user));
+        if($parent == null){
+            $parent = most_left_and_bottom(User::find($admin_user));
+        }
+    }else{
+        $parent = parent_finder(User::where('own_ref', $request->reference)->first());
+        if($parent == null){
+            $parent = most_left_and_bottom(User::where('own_ref', $request->reference)->first());
+        }
     }
 
     $user = new User();
