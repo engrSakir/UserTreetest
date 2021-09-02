@@ -130,13 +130,15 @@ if (!function_exists('random_code')) {
             return $parent;
         }
 
+        $parent = [$parent->id];
         while (!empty($parent)) {
 
-            //dd($parent);
+            // dd($parent);
             $left_empty_space = DB::table('users')->whereIn('parent_user', $parent)->where('left_user', null)->first();
             $right_empty_space = DB::table('users')->whereIn('parent_user', $parent)->where('right_user', null)->first();
 
-            //dd($right_empty_space);
+            // dd($left_empty_space);
+            // dd($right_empty_space);
 
             //2 empty space found ang get one
             if ($left_empty_space != null && $right_empty_space != null) {
