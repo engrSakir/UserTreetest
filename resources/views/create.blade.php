@@ -19,16 +19,19 @@
             <div class="col-md-12 m-5">
                 <ul class="nav justify-content-center">
                     <li class="nav-item">
-                        <a class="nav-link active" aria-current="page" href="{{ url('/') }}">Tree</a>
+                        <a class="nav-link  btn btn-info m-1" aria-current="page" href="{{ url('/') }}">Tree</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="{{ url('/create') }}">Add User</a>
+                        <a class="nav-link btn btn-info m-1" href="{{ url('/create') }}">Add User</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link btn btn-danger text-white m-1" href="{{ url('/clean') }}">Clean Data</a>
                     </li>
                 </ul>
             </div>
             <div class="col-md-12 m-5">
                 <div class="card text-center">
-                    <div class="card-header">
+                    <div class="card-header  bg-info">
                         Create User
                     </div>
                     <div class="card-body">

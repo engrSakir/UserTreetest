@@ -77,3 +77,12 @@ Route::post('/carry-update', function (Request $request) {
     carry_increment($request->user, $request->input('carry_' . $request->user));
     return back();
 })->name('updateCarry');
+
+Route::get('/clean', function () {
+   foreach(User::all() as $user){
+       if($user->id != 1){
+        $user->delete();
+       }
+   }
+    return back();
+})->name('clean');
