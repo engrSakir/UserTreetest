@@ -45,18 +45,8 @@ Route::post('/create', function (Request $request) {
     $parent = User::where('own_ref', $request->reference)->first();
 
     if($parent->left_user != null && $parent->right_user != null){
-        // $parent_left = User::where('using_ref', $request->reference)->where('left_user', null)->first();
-        // $parent_right = User::where('using_ref', $request->reference)->where('right_user', null)->first();
-
-        // if($parent_left->id <= $parent_right->id){
-        //     $parent = $parent_left;
-        // }else{
-        //     $parent = $parent_right;
-        // }
-
         $parent_left = $parent->childs()->where('left_user', null)->first();
         $parent_right = $parent->childs()->where('right_user', null)->first();
-
         if($parent_left != null && $parent_right == null){
             $parent = $parent_left;
         }else if($parent_left == null && $parent_right != null){
@@ -69,10 +59,19 @@ Route::post('/create', function (Request $request) {
             }
         }else{
             //Parent not found who have left/right side empty.
-            dd("Parent not found");
+            //dd("Parent not found");
+            foreach($parent->childs as $ch){
+                // dd($ch);
+
+                if(tfunction($ch) != null){
+                    $parent = tfunction($ch);
+                    break;
+                }
+            }
         }
-        //dd($parent);
     }
+
+    // dd($parent);
 
     $user = new User();
     $user->name = $request->name;
