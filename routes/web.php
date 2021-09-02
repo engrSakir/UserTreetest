@@ -24,7 +24,6 @@ Route::get('/', function () {
 
 Route::get('/user/{user_id}', function ($user_id) {
     $data = user_tree($user_id);
-    //dd($data);
     return view('welcome', compact('data'));
 })->name('selsctUser');
 
@@ -38,18 +37,14 @@ Route::post('/create', function (Request $request) {
         'reference' => 'nullable|string|exists:users,own_ref',
     ]);
 
-    if($request->reference == null){
+    if ($request->reference == null) {
         $admin_user = 1;
-        $parent = parent_finder(User::find($admin_user));
-        if($parent == null){
-            $parent = most_left_and_bottom(User::find($admin_user));
-        }
-    }else{
-        $parent = parent_finder(User::where('own_ref', $request->reference)->first());
-        if($parent == null){
-            $parent = most_left_and_bottom(User::where('own_ref', $request->reference)->first());
-        }
+        $parent = parent_finder2(User::find($admin_user));
+    } else {
+        $parent = parent_finder2(User::where('own_ref', $request->reference)->first());
     }
+
+    // dd($parent);
 
     $user = new User();
     $user->name = $request->name;
@@ -61,24 +56,24 @@ Route::post('/create', function (Request $request) {
     $user->save();
 
     //Parent update using new child record
-    if($parent->left_user == null){
+    if ($parent->left_user == null) {
         $parent->left_user = $user->id;
-    }else if($parent->right_user == null){
+        $parent->save();
+    } else if ($parent->right_user == null) {
         $parent->right_user = $user->id;
-    }else{
+        $parent->save();
+    } else {
         dd('Parent not found who has empty space.');
     }
-    $parent->save();
-
     return back();
 })->name('storeUser');
 
 Route::post('/carry-update', function (Request $request) {
     $request->validate([
         'user' => 'required|exists:users,id',
-        'carry_'.$request->user => 'required',
+        'carry_' . $request->user => 'required',
     ]);
 
-    carry_increment($request->user, $request->input('carry_'.$request->user));
+    carry_increment($request->user, $request->input('carry_' . $request->user));
     return back();
 })->name('updateCarry');

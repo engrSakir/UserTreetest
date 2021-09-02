@@ -1,6 +1,7 @@
 <?php
 
 use App\Models\User;
+use Illuminate\Support\Facades\DB;
 
 if (!function_exists('random_code')) {
 
@@ -115,14 +116,54 @@ if (!function_exists('random_code')) {
 
         //Left and right booth are not found go to child lavel
         if ($left_empty_space == null && $right_empty_space == null) {
+
             foreach ($parent->childs as $child) {
                 parent_finder($child);
             }
         }
     }
 
-    function most_left_and_bottom(User $root_user){
-        while($root_user->leftChild){
+
+    function parent_finder2(User $parent)
+    {
+        if ($parent->left_user == null || $parent->right_user == null) {
+            return $parent;
+        }
+
+        while (!empty($parent)) {
+
+            //dd($parent);
+            $left_empty_space = DB::table('users')->whereIn('parent_user', $parent)->where('left_user', null)->first();
+            $right_empty_space = DB::table('users')->whereIn('parent_user', $parent)->where('right_user', null)->first();
+
+            //dd($right_empty_space);
+
+            //2 empty space found ang get one
+            if ($left_empty_space != null && $right_empty_space != null) {
+                if ($left_empty_space->id <= $right_empty_space->id) {
+                    return User::find($left_empty_space->id);
+                } else {
+                    return User::find($right_empty_space->id);
+                }
+            }
+
+            //only left found and return left
+            if ($left_empty_space) {
+                return User::find($left_empty_space->id);
+            }
+
+            //only right found and return right
+            if ($right_empty_space) {
+                return User::find($right_empty_space->id);
+            }
+
+            $parent = DB::table('users')->whereIn('parent_user', $parent)->pluck('id'); // make parent
+        }
+    }
+
+    function most_left_and_bottom(User $root_user)
+    {
+        while ($root_user->leftChild) {
             $root_user = $root_user->leftChild;
         }
         return $root_user;
