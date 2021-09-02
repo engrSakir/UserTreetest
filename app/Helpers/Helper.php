@@ -85,7 +85,7 @@ if (!function_exists('random_code')) {
         }
     }
 
-    function tfunction(User $parent)
+    function parent_finder(User $parent)
     {
         if ($parent->left_user == null || $parent->right_user == null) {
             return $parent;
@@ -115,10 +115,16 @@ if (!function_exists('random_code')) {
 
         //Left and right booth are not found go to child lavel
         if ($left_empty_space == null && $right_empty_space == null) {
-            foreach ($parent->childs as $ch) {
-                // dd($ch);
-                tfunction($ch);
+            foreach ($parent->childs as $child) {
+                parent_finder($child);
             }
         }
+    }
+
+    function most_left_and_bottom(User $root_user){
+        while($root_user->leftChild){
+            $root_user = $root_user->leftChild;
+        }
+        return $root_user;
     }
 }
