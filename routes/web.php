@@ -44,13 +44,7 @@ Route::post('/create', function (Request $request) {
 
     $parent = User::where('own_ref', $request->reference)->first();
 
-    if($parent->left_user == null){
-        $parent = $parent;
-        $position = 'left';
-    }else if($parent->right_user == null){
-        $parent = $parent;
-        $position = 'right';
-    }else{
+    if($parent->left_user != null && $parent->right_user != null){
         // $parent_left = User::where('using_ref', $request->reference)->where('left_user', null)->first();
         // $parent_right = User::where('using_ref', $request->reference)->where('right_user', null)->first();
 
